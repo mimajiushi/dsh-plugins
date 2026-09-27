@@ -1,0 +1,61 @@
+{
+  "name": "dsh-agent-teams-approval",
+  "version": "0.1.0",
+  "description": "DSH web plugin: a Settings → General switch that lets AgentTeams run without the Web plan-approval click.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-renderer"
+      ]
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@deepseek-ai/dsh-llm": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "agent-teams",
+    "approval",
+    "settings",
+    "workflow"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimajiushi/dsh-plugins.git"
+  },
+  "homepage": "https://github.com/mimajiushi/dsh-plugins/tree/main/plugins/dsh-agent-teams-approval#readme",
+  "author": "mimajiushi",
+  "license": "MIT"
+}

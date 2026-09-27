@@ -1,0 +1,14 @@
+# dsh-agent-teams-approval bundle patch: mounts the AgentTeams approval switch.
+#
+# The plugin registers one user-settings namespace (`agent-teams-approval`) on the
+# host and one Settings → General row in the web client. While the switch is on,
+# the captain creates teams with approval="automatic" (AgentTeams' documented
+# immediate-execution path) and a `approval="required"` create call is rejected,
+# so no plan ever stages for a manual "Approve & Run" click.
+#
+# Install: `dsh plugin --profile <name> add link:<absolute path to this package>`
+# (or `node scripts/install.mjs --profile <name>`), then restart DSH.
+- insert:
+    - id: agent-teams-approval
+      # Node-resolvable package name — must stay in sync with package.json `name`.
+      name: 'dsh-agent-teams-approval'
