@@ -1,0 +1,40 @@
+# Local tooling and third-party sources that are NOT published from this repo.
+
+# The author's local regression gate and shared scripts (machine-specific paths).
+_guard/
+_shared/
+
+# A third-party plugin kept as a local checkout: it is published by its own
+# author (@jing-hy) and already listed in the community catalog.
+computer-user/
+
+# Compatibility junctions: the plugins live in `plugins/` now, and these nine
+# root-level junctions keep the author's already-wired profile (whose `link:`
+# dependencies point at the pre-move paths) resolving. A fresh clone has none of
+# them and needs none of them.
+/dsh-agent-teams-approval
+/dsh-agent-teams-limits
+/dsh-compact-model
+/dsh-llm-retry-all
+/dsh-plan-card-sidebar
+/dsh-subagent-model-guard
+/dsh-subagent-toggle
+/dsh-web-fetch-fakeip-allow
+/dsh-workspace-changes
+
+# The author's own composer-history is deliberately not published yet: two
+# entries in the community catalog already cover the same feature (one of them
+# owns this very package name on npm), so it needs a rename first.
+/dsh-composer-history
+
+# Dependencies and noise.
+node_modules/
+*.bak-*
+*.bak-agent-teams-limits
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Local scratch.
+.tmp/
