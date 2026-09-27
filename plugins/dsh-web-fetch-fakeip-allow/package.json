@@ -1,0 +1,50 @@
+{
+  "name": "dsh-web-fetch-fakeip-allow",
+  "version": "0.2.0",
+  "description": "DSH host plugin: let web_fetch reach domains the local Clash/mihomo TUN resolves into its fake-ip pools (IPv4 198.18.0.0/15, IPv6 2001:2::/48), while every other non-public address stays blocked.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/logic.test.mjs test/host.test.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "web-fetch",
+    "fake-ip",
+    "clash",
+    "mihomo",
+    "dns"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimajiushi/dsh-plugins.git"
+  },
+  "homepage": "https://github.com/mimajiushi/dsh-plugins/tree/main/plugins/dsh-web-fetch-fakeip-allow#readme",
+  "author": "mimajiushi",
+  "license": "MIT"
+}

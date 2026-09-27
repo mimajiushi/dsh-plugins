@@ -1,0 +1,34 @@
+# dsh-web-fetch-fakeip-allow bundle patch: relaxes exactly ONE address check.
+#
+# The host's web_fetch provider (@deepseek-ai/dsh-web-fetch-http) refuses any URL
+# whose hostname resolves to a non-public address. A local proxy in TUN + fake-ip
+# mode (Clash/mihomo, sing-box, Surge) answers proxied domains with placeholder
+# addresses and routes the connection itself, so that refusal fires on ordinary
+# public sites. This row installs the plugin that accepts such a resolution when -
+# and only when - every answer lies inside `allow`.
+#
+# Both families must be listed when the proxy runs dual-stack: the AAAA placeholder
+# lives outside the IPv4 pool, and one non-public entry refuses the whole answer set
+# (verified 2026-09-25: mihomo with `dns.ipv6: true` and
+# `fake-ip-range6: 2001:2::0/64` answers api.github.com with 198.18.0.38 + 2001:2::24,
+# which an IPv4-only allow list rejects).
+#
+# Install: `dsh plugin --profile desktop add link:<absolute path to this package>`
+# (or `node scripts/install.mjs --profile desktop`), then restart DSH.
+# Roll back: set `enabled: false` below (and re-compose), or uninstall.
+- insert:
+    - id: web-fetch-fakeip-allow
+      # Node-resolvable package name — must stay in sync with package.json `name`.
+      name: 'dsh-web-fetch-fakeip-allow'
+      config:
+        # false makes the plugin inert without uninstalling it.
+        enabled: true
+        # CIDRs whose answers may be accepted even though they are not public.
+        # Keep this to your proxy's fake-ip pools: it is the whole relaxation.
+        # 198.18.0.0/15 = IPv4 pool (fake-ip-range), 2001:2::/48 = IPv6 pool
+        # (fake-ip-range6; this machine pins the narrower 2001:2::0/64).
+        allow:
+          - 198.18.0.0/15
+          - 2001:2::/48
+        # true logs one line per accepted fake-ip resolution (handy while verifying).
+        log: true
