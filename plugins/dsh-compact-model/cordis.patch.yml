@@ -1,0 +1,21 @@
+# Bundle patch layer for dsh-compact-model.
+#
+# The row loads this package's main entry as a HOST-plane Cordis plugin. That
+# placement is deliberate and load-bearing:
+#
+#   * `dsh-web-app` disables the host-plane `compaction-basic` and each agent
+#     preset re-declares it inside `cordis:group` with `isolate: { compaction:
+#     true }`. A preset row is a read-only input (the mount suppresses `write()`)
+#     and a preset is a whole-roster snapshot with no patch semantics, so the
+#     compaction model cannot be configured by editing a preset.
+#   * The host plane is therefore the only place that can observe EVERY preset's
+#     `compaction-basic` row. It does so through the global `internal/config`
+#     waterfall, which fires on every fiber (re)load regardless of realm.
+#   * The host plane also owns `ctx.settings` (from `@deepseek-ai/dsh-settings-file`)
+#     and `ctx.llm` (the shared LlmRuntime), which this plugin needs.
+#
+# Nothing here publishes a service, so the preset mount audit (`leakedServices`)
+# has nothing to object to.
+- insert:
+    - id: compact-model
+      name: dsh-compact-model

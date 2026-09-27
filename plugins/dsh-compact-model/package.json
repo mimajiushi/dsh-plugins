@@ -1,0 +1,58 @@
+{
+  "name": "dsh-compact-model",
+  "version": "0.1.0",
+  "description": "DSH host plugin: makes /compact use a user-chosen provider/model instead of the session's chat model, configurable in Settings.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-api-remotes"
+      ]
+    }
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "compaction",
+    "compact",
+    "model",
+    "settings"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimajiushi/dsh-plugins.git"
+  },
+  "homepage": "https://github.com/mimajiushi/dsh-plugins/tree/main/plugins/dsh-compact-model#readme",
+  "author": "mimajiushi",
+  "license": "MIT"
+}
