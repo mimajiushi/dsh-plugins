@@ -1,0 +1,23 @@
+# Bundle patch layer for dsh-llm-retry-all.
+#
+# The row loads this package's main entry as a HOST-plane Cordis plugin:
+#
+#   * `agent/request-error` is dispatched from each agent loop, and host-plane
+#     listeners pass the scope filter (the stock `@deepseek-ai/dsh-llm-retry`
+#     row lives on this same plane in dsh-base). This plugin PREPENDS its
+#     listener so it decides first; what it passes through (`next()`) reaches
+#     the stock plugin unchanged.
+#   * The host plane owns `ctx.settings` (the namespace backing the Settings
+#     card) and the shared `LlmRuntime` whose instance `stream()` this plugin
+#     wraps for DIRECT calls (compaction, session title) — the same seam
+#     `dsh-compact-model` already uses.
+#
+# The stock `llm-retry` row is deliberately NOT disabled: when this plugin's
+# setting is 0 (off) the built-in per-provider policy (5 retries on transient
+# codes) keeps working exactly as before.
+#
+# Nothing here publishes a service, so the preset mount audit (`leakedServices`)
+# has nothing to object to.
+- insert:
+    - id: llm-retry-all
+      name: dsh-llm-retry-all
