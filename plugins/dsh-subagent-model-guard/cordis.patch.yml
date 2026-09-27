@@ -1,0 +1,25 @@
+# dsh-subagent-model-guard bundle patch: mounts the child-Agent model gate.
+#
+# The plugin registers one host-plane gate over `ctx.subagents.start` /
+# `ctx.subagents.startContinuable` — the only operations that create a child
+# Agent — plus one `ctx.tools.guard` for early feedback on delegation tools.
+# The whitelist itself is NOT configured here: it is read live from the
+# `subagent-model-selection` settings section that `@deepseek-ai/dsh-tool-subagent`
+# owns and the Web UI exposes, so there is exactly one source of truth.
+#
+# `enforce: strict` is the only shipped mode: the route a child would actually
+# run on (explicit fields, a roster profile, or inheritance from the delegating
+# parent) must be on the list, or the creation is refused and the model reads an
+# error naming every allowed route. While `subagent-model-selection.enabled` is
+# false the plugin is inert.
+#
+# Install: add `link:<absolute path to this package>` to the profile's
+# `dependencies` and this package's name to `dsh.profile.bundles`, then restart
+# DSH. See README.md.
+- insert:
+    - id: subagent-model-guard
+      # Node-resolvable package name — must stay in sync with package.json `name`.
+      name: 'dsh-subagent-model-guard'
+      config:
+        enabled: true
+        enforce: strict
