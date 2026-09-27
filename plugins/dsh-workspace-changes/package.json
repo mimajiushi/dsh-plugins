@@ -1,0 +1,57 @@
+{
+  "name": "dsh-workspace-changes",
+  "version": "0.1.0",
+  "description": "DSH web plugin: an IDE-style Changes panel in the right Sidebar — grouped working-tree changes (JetBrains-style Changes/Unversioned groups, directory tree) with a full diff viewer (unified/side-by-side, line numbers, file navigation), copy-diff, and open-in-IDE. Read-only against the repository.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "test",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/status-parse.test.mjs test/diff-parse.test.mjs test/routes.test.mjs test/http-e2e.test.mjs test/editors.test.mjs test/client.test.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "git",
+    "diff",
+    "sidebar",
+    "changes"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimajiushi/dsh-plugins.git"
+  },
+  "homepage": "https://github.com/mimajiushi/dsh-plugins/tree/main/plugins/dsh-workspace-changes#readme",
+  "author": "mimajiushi",
+  "license": "MIT"
+}

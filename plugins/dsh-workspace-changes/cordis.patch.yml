@@ -1,0 +1,31 @@
+# dsh-workspace-changes bundle patch: inserts the plugin row into the web
+# profile roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
+# manifest field) over dsh-base; activate with
+#   dsh plugin --profile desktop add github:mimajiushi/dsh-plugins#path:/plugins/dsh-workspace-changes
+#
+# The host half (exports ".") registers the /changes/* JSON routes and the
+# /changes/events SSE stream on the shared webserver (loopback-only, gated to
+# registered workspaces; read-only git verbs). The `dsh.client` declaration in
+# package.json makes the browser half (exports "./client", served at
+# /plugins/dsh-workspace-changes/client.js) load in the web GUI, where it
+# registers the right-Sidebar "变更" tab type.
+#
+# Config:
+#   editor   — which editor the "在 IDE 打开" button prefers:
+#              'auto' (VS Code when detected, else system association),
+#              'system' (OS default association), or an id from `editors`.
+#   editors  — custom editor command templates; `{file}` and `{line}` are
+#              substituted. Example:
+#                editors:
+#                  - id: idea
+#                    label: IntelliJ IDEA
+#                    command: '"C:\\Tools\\idea64.exe" {file}'
+- insert:
+    - id: workspace-changes
+      name: 'dsh-workspace-changes'
+      config:
+        editor: auto
+        editors: []
+        maxDiffBytes: 1048576
+        maxUntrackedBytes: 262144
+        pollIntervalMs: 30000
