@@ -1,0 +1,32 @@
+# dsh-subagent-toggle bundle patch: mounts the subagent capability switch.
+#
+# The plugin registers ONE tool guard (ctx.tools.guard) that, while the
+# `dsh-subagent-toggle` settings section says `enabled: false`, denies every
+# tool call that can create or wake a subagent:
+#
+#   - `subagent`, `subagent_fork`, and any `subagent_<provider>` variant
+#     (the delegation family; `subagent_report*` stays allowed);
+#   - every name in `extraBlockedTools` below.
+#
+# The denial text tells the model to use Agent Teams instead. AgentTeams
+# (`agent_teams_*`), `list_agents` and `interrupt_agent` are deliberately NOT
+# blocked: teams are the sanctioned replacement, and the two control tools
+# only inspect or stop children that already exist.
+#
+# The on/off state itself lives in the user settings section
+# `dsh-subagent-toggle` (registered by the host half, edited from
+# Settings → 插件 → 插件配置 → 「Subagent 开关」). The `enabled` here only
+# decides whether the PLUGIN mounts its guard at all; it is not the switch.
+#
+# Install: node scripts/install.mjs --profile desktop  (then restart DSH)
+- insert:
+    - id: subagent-toggle
+      # Node-resolvable package name — must stay in sync with package.json `name`.
+      name: 'dsh-subagent-toggle'
+      config:
+        enabled: true
+        extraBlockedTools:
+          - workflow
+          - ralph
+          - list_subagent_models
+          - send_message
