@@ -1,0 +1,16 @@
+# dsh-agent-teams-limits bundle patch: mounts the AgentTeams limits plugin.
+#
+# The plugin registers one user-settings namespace (`agent-teams-limits`), which
+# the client half renders as a card under Settings -> Plugins -> Plugin
+# configuration, and injects the two values into the `@nanmicoder/dsh-agent-teams`
+# row through the loader's global `internal/config` waterfall - so the third-party
+# package stays untouched by configuration.
+#
+# The concurrency value additionally needs the local patch that teaches the
+# AgentTeams scheduler to honour it: `scripts/patch-agent-teams-limits.mjs`
+# (re-run it after updating the plugin). Without that patch the member cap still
+# works; the concurrency cap logs a warning and stays inert.
+- insert:
+    - id: agent-teams-limits
+      # Node-resolvable package name - must stay in sync with package.json `name`.
+      name: 'dsh-agent-teams-limits'
