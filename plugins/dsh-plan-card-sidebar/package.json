@@ -1,0 +1,57 @@
+{
+  "name": "dsh-plan-card-sidebar",
+  "version": "0.1.0",
+  "description": "DSH web plugin: gives the plan-review card ('计划待审') a second home in the right sidebar — same card, same decision buttons — with a per-card switch that moves it between the sidebar and the main conversation.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  },
+  "files": [
+    "lib",
+    "test",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "plan",
+    "plan-mode",
+    "sidebar",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimajiushi/dsh-plugins.git"
+  },
+  "homepage": "https://github.com/mimajiushi/dsh-plugins/tree/main/plugins/dsh-plan-card-sidebar#readme",
+  "author": "mimajiushi",
+  "license": "MIT"
+}

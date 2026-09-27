@@ -1,0 +1,13 @@
+# dsh-plan-card-sidebar bundle patch: inserts the dual-face plugin row into the
+# web profile roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
+# manifest field) over dsh-base; activate with
+#   dsh plugin --profile desktop add github:mimajiushi/dsh-plugins#path:/plugins/dsh-plan-card-sidebar
+#
+# The row is a bare plugin by package name: the node half (exports ".") runs in
+# the host process (an empty apply — this is a pure UI plugin), and the
+# `dsh.client` declaration in package.json makes the browser half
+# (exports "./client", served at /plugins/dsh-plan-card-sidebar/client.js) load
+# in the web GUI, where it registers the sidebar tab type and the composer seat.
+- insert:
+    - id: plan-card-sidebar
+      name: 'dsh-plan-card-sidebar'
